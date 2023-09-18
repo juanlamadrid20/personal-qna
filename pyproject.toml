@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "notion-qna"
+version = "0.1.0"
+description = ""
+authors = ["juanlamadrid20 <juan.lamadrid@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+streamlit = "^1.26.0"
+langchain = "^0.0.292"
+openai = "^0.28.0"
+tiktoken = "^0.5.1"
+faiss-cpu = "^1.7.4"
+beautifulsoup4 = "^4.12.2"
+requests = "^2.31.0"
+html2text = "^2020.1.16"
+unstructured = {extras = ["md"], version = "^0.10.15"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
