@@ -5,6 +5,10 @@ from langchain.document_loaders import NotionDirectoryLoader, DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
+import sys
+
+# Increase recursion limit to avoid RecursionError; needed for splitting the text into smaller chunks
+sys.setrecursionlimit(3000)
 
 # get the current directory
 base_dir = os.path.dirname(os.path.realpath(__file__))
@@ -32,10 +36,14 @@ notion_documents = notion_loader.load()
 
 # Load the markdown content located in the folder 'content/blogs'
 markdown_loader = DirectoryLoader(os.path.join(grandparent_dir, 'content', 'blogs'))
-markdown_documents = markdown_loader.load()
+blog_documents = markdown_loader.load()
+
+# Load the markdown content located in the folder 'content/blogs'
+markdown_loader = DirectoryLoader(os.path.join(grandparent_dir, 'content', 'docs'))
+guide_documents = markdown_loader.load()
 
 # Combine both content sources
-documents = notion_documents + markdown_documents
+documents = notion_documents + blog_documents + guide_documents
 
 # Split the content into smaller chunks
 markdown_splitter = RecursiveCharacterTextSplitter(
@@ -43,6 +51,7 @@ markdown_splitter = RecursiveCharacterTextSplitter(
     chunk_size=1500,
     chunk_overlap=100
 )
+
 docs = markdown_splitter.split_documents(documents)
 
 # Initialize OpenAI embedding model

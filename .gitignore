@@ -1,3 +1,4 @@
 content/
 .streamlit/
 faiss_index
+.idea
