@@ -2,12 +2,9 @@
 Simple but powerful example using Streamlit, OpenAI, Langchain to create a chatbot that can answer questions about your data.
 This example is built to index databricks blogs, databricks documentation, and notion markdown exports
 
-# Example
-<video width="320" height="240" controls>
-  <source src="docs/example.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
+# Example 
 
+![Example Q&A](./docs/example.gif)
 
 # Running
 - navigate to project root
