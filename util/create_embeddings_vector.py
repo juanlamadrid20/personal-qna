@@ -7,19 +7,23 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 import sys
 
-# Increase recursion limit to avoid RecursionError; needed for splitting the text into smaller chunks
+# The following line increases the maximum recursion limit in Python.
+# This is necessary because the RecursiveCharacterTextSplitter later in the code may
+# cause a RecursionError if the recursion limit is not increased.
 sys.setrecursionlimit(3000)
 
-# get the current directory
+# The program operates relative to the location of this script file.
+# So we start by getting the directory that this script file is in.
 base_dir = os.path.dirname(os.path.realpath(__file__))
 
-# Get two levels up
+# We then move two levels up in the directory structure. This is the project's root directory.
 grandparent_dir = os.path.dirname(base_dir)
 
-# Load OpenAI API key
+# OpenAI needs an API key to work, and we load that from a secret st file
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
-# Delete existing FAISS index if exists
+# We will be storing some data in a FAISS (Facebook AI Similarity Search) index.
+# If a previous run of this script has already created that index, we want to delete it before creating a new one.
 faiss_index_path = os.path.join(grandparent_dir, 'faiss_index')
 
 try:
@@ -30,36 +34,43 @@ try:
 except PermissionError:
     print(f"No permission to delete files in {faiss_index_path}. Please check the file permissions.")
 
-# Load the Notion content located in the folder 'content/notion'
+# Next, we load up some documents. There are two types of documents we're interested in.
+# content from a Notion document and Markdown content that's stored in separate directories.
+
+# Load the Notion document content from 'content/notion' directory
 notion_loader = NotionDirectoryLoader(os.path.join(grandparent_dir, 'content', 'notion'))
 notion_documents = notion_loader.load()
 
-# Load the markdown content located in the folder 'content/blogs'
+# Load the markdown content from 'content/blogs' directory
 markdown_loader = DirectoryLoader(os.path.join(grandparent_dir, 'content', 'blogs'))
 blog_documents = markdown_loader.load()
 
-# Load the markdown content located in the folder 'content/blogs'
+# Load another markdown content from 'content/docs' directory
 markdown_loader = DirectoryLoader(os.path.join(grandparent_dir, 'content', 'docs'))
 guide_documents = markdown_loader.load()
 
-# Combine both content sources
+# Combine all loaded documents together
 documents = notion_documents + blog_documents + guide_documents
 
-# Split the content into smaller chunks
+# Next, these documents are split into smaller chunks for processing.
+# The split points are defined by a set of separators (any level of a markdown header, newlines and periods),
+# and each chunk is limited by a size (1500 characters) with some overlap (100 characters).
 markdown_splitter = RecursiveCharacterTextSplitter(
     separators=["#", "##", "###", "\\n\\n", "\\n", "."],
     chunk_size=1500,
     chunk_overlap=100
 )
 
+# Splits all the loaded documents
 docs = markdown_splitter.split_documents(documents)
 
-# Initialize OpenAI embedding model
+# The OpenAI Embeddings model is used to convert these chunks into embeddings (vector representations of the text).
 embeddings = OpenAIEmbeddings()
 
-# Convert all chunks into vectors embeddings using OpenAI embedding model
-# Store all vectors in FAISS index and save to local folder 'faiss_index'
+# Convert documents into vector embeddings and store these vectors into a FAISS index.
 db = FAISS.from_documents(docs, embeddings)
+
+# This FAISS index is then saved to a local path, so it can be used later.
 db.save_local(faiss_index_path)
 
 print('Local FAISS index has been successfully saved.')

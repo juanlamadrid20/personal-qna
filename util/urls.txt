@@ -2,3 +2,9 @@ https://www.databricks.com/blog/2022/03/10/functional-workspace-organization-on-
 https://www.databricks.com/blog/2022/08/26/databricks-workspace-administration-best-practices-for-account-workspace-and-metastore-admins.html
 https://www.databricks.com/blog/2022/11/22/serving-primer-unity-catalog-onboarding.html
 https://www.databricks.com/blog/2023/03/09/distributed-data-governance-and-isolated-environments-unity-catalog.html
+https://www.databricks.com/blog/2022/09/30/best-practices-and-guidance-cloud-engineers-deploy-databricks-aws-part-1.html
+https://www.databricks.com/blog/2023/01/27/best-practices-and-guidance-cloud-engineers-deploy-databricks-aws-part-2.html
+https://www.databricks.com/blog/best-practices-and-guidance-cloud-engineers-deploy-databricks-aws-part-3
+https://www.databricks.com/blog/2021/05/24/security-best-practices-for-aws-on-databricks.html
+https://www.databricks.com/blog/2021/04/20/attack-of-the-delta-clones-against-disaster-recovery-availability-complexity.html
+https://www.databricks.com/blog/2022/04/25/disaster-recovery-overview-strategies-and-assessment.html
