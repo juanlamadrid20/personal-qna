@@ -1,12 +1,12 @@
-import streamlit as st
 import openai
+import streamlit as st
 from langchain.chains import ConversationalRetrievalChain
-from langchain.memory import ConversationBufferWindowMemory
 from langchain.chat_models import ChatOpenAI
-from langchain.vectorstores import FAISS
 from langchain.embeddings import OpenAIEmbeddings
+from langchain.memory import ConversationBufferWindowMemory
 from langchain.prompts import PromptTemplate
 from langchain.prompts.chat import SystemMessagePromptTemplate
+from langchain.vectorstores import Chroma
 
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
@@ -25,8 +25,8 @@ answering user questions.
     # Load OpenAI chat model
     llm = ChatOpenAI(temperature=0)
 
+    vector_store = Chroma(persist_directory="./chroma_index", embedding_function=embeddings)
     # Load our local FAISS index as a retriever
-    vector_store = FAISS.load_local("/Users/jlamadrid/dev/blogs/personal-qna/faiss_index", embeddings)
     retriever = vector_store.as_retriever(search_kwargs={"k": 3})
 
     # Create memory 'chat_history'

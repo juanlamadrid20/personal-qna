@@ -8,3 +8,4 @@ https://www.databricks.com/blog/best-practices-and-guidance-cloud-engineers-depl
 https://www.databricks.com/blog/2021/05/24/security-best-practices-for-aws-on-databricks.html
 https://www.databricks.com/blog/2021/04/20/attack-of-the-delta-clones-against-disaster-recovery-availability-complexity.html
 https://www.databricks.com/blog/2022/04/25/disaster-recovery-overview-strategies-and-assessment.html
+https://www.databricks.com/blog/2022/07/14/6-guiding-principles-to-build-an-effective-data-lakehouse.html

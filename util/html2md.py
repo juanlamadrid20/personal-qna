@@ -68,7 +68,7 @@ def main():
 
 
 def extract_blogs():
-    with open("/Users/jlamadrid/dev/blogs/personal-qna/util/urls.txt", "r") as file:
+    with open("/Users/jlamadrid/dev/machine-learning/personal-qna/util/urls.txt", "r") as file:
         urls = file.read().splitlines()
 
     for url in urls:
