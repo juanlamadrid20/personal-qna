@@ -17,6 +17,7 @@ requests = "^2.31.0"
 html2text = "^2020.1.16"
 unstructured = {extras = ["md"], version = "^0.10.16"}
 chromadb = "^0.4.13"
+tenacity = "^8.2.3"
 
 
 [build-system]
