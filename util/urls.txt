@@ -9,3 +9,6 @@ https://www.databricks.com/blog/2021/05/24/security-best-practices-for-aws-on-da
 https://www.databricks.com/blog/2021/04/20/attack-of-the-delta-clones-against-disaster-recovery-availability-complexity.html
 https://www.databricks.com/blog/2022/04/25/disaster-recovery-overview-strategies-and-assessment.html
 https://www.databricks.com/blog/2022/07/14/6-guiding-principles-to-build-an-effective-data-lakehouse.html
+https://www.databricks.com/blog/how-edmunds-builds-blueprint-generative-ai
+https://www.databricks.com/blog/solution-accelerator-llms-manufacturing
+https://www.databricks.com/blog/using-images-and-metadata-product-fuzzy-matching-zingg

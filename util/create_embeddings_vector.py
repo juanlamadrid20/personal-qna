@@ -6,6 +6,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
 import sys
+from tenacity import retry, stop_after_attempt, wait_exponential
 
 # The following line increases the maximum recursion limit in Python.
 # This is necessary because the RecursiveCharacterTextSplitter later in the code may
@@ -67,8 +68,14 @@ docs = markdown_splitter.split_documents(documents)
 # The OpenAI Embeddings model is used to convert these chunks into embeddings (vector representations of the text).
 embeddings = OpenAIEmbeddings()
 
-# Convert documents into vector embeddings and store these vectors into a chroma index.
-vectordb = Chroma.from_documents(docs, embeddings, persist_directory=chroma_index_path)
 
+@retry(stop=stop_after_attempt(5), wait=wait_exponential(multiplier=1, min=5, max=20))
+def create_chroma_from_documents(doc, embeddings, chroma_index_path):
+    vectordb = Chroma.from_documents(docs, embeddings, persist_directory=chroma_index_path)
+    return vectordb
+
+
+# Convert documents into vector embeddings and store these vectors into a chroma index.
+vectordb = create_chroma_from_documents(docs, embeddings, chroma_index_path)
 
 print('Local Chroma index has been successfully saved.')
